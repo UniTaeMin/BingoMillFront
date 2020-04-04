@@ -48,4 +48,17 @@ body {
   width: 100%;
   height: 100vh;
 }
+
+/* vuetify setting */
+/* .v-navigation-drawer__content {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.v-navigation-drawer__content > div {
+  width: 100%;
+} */
+.v-navigation-drawer__content {
+  padding: 20px 0px;
+}
 </style>
