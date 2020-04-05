@@ -46,16 +46,23 @@
         <div class="word__count">{{words.length}} / {{ sizesCalculation}}</div>
         <div id="word__list" class="word__list" @scroll="wordList">
           <v-card v-if="words.length > 0">
-            <template v-for="(word, i) in words">
-              <v-divider v-if="i !== 0" :key="`${i}-divider`"></v-divider>
-              <v-list-item :key="`${i}-${word}`">
-                <div>{{word}}</div>
-                <v-spacer></v-spacer>
-                <v-scroll-x-transition>
-                  <v-icon color="red" @click="clear(i)">clear</v-icon>
-                </v-scroll-x-transition>
-              </v-list-item>
-            </template>
+            <draggable
+              class="list-group"
+              tag="ul"
+              v-model="words"
+              @start="drag = true"
+              @end="drag = false"
+            >
+              <template v-for="(word, i) in words">
+                <v-list-item :key="`${i}-${word}`">
+                  <div>{{word}}</div>
+                  <v-spacer></v-spacer>
+                  <v-scroll-x-transition>
+                    <v-icon color="red" @click="clear(i)">clear</v-icon>
+                  </v-scroll-x-transition>
+                </v-list-item>
+              </template>
+            </draggable>
           </v-card>
         </div>
       </v-list>
@@ -66,13 +73,36 @@
     </v-app-bar>
     <v-content style="background-color: #f1f1fa">
       <v-container class="fill-height" fluid>
-        <v-row align="center" justify="center">안녕</v-row>
+        <v-row align="center" justify="center" class="fill-height" style="flex-direction:column">
+          <div class="bingo__title">{{selectTitle}}</div>
+          <div class="bingo__frame">
+            <div class="bingo__content">
+              <template v-if="wordSize == 4">
+                <div v-for="(v,i) in wordSize" :key="i+v" class="four__size">{{words[i]}}</div>
+              </template>
+              <template v-if="wordSize == 9">
+                <div v-for="(v,i) in wordSize" :key="i+v" class="nine__size">{{words[i]}}</div>
+              </template>
+              <template v-if="wordSize == 16">
+                <div v-for="(v,i) in wordSize" :key="i+v" class="sixteen__size">{{words[i]}}</div>
+              </template>
+              <template v-if="wordSize == 25">
+                <div v-for="(v,i) in wordSize" :key="i+v" class="twentyFive__size">{{words[i]}}</div>
+              </template>
+              <template v-if="wordSize == 36">
+                <div v-for="(v,i) in wordSize" :key="i+v" class="thirtySix__size">{{words[i]}}</div>
+              </template>
+            </div>
+          </div>
+        </v-row>
       </v-container>
     </v-content>
   </v-app>
 </template>
 
 <script>
+import draggable from "vuedraggable";
+
 export default {
   data() {
     return {
@@ -87,11 +117,17 @@ export default {
       bottom_flag: true
     };
   },
+  components: {
+    draggable
+  },
   created() {},
   methods: {
+    checkMove() {
+      console.log(this.words);
+    },
     wordCreate() {
       if (this.selectWord != "" && this.words.length != this.wordSize) {
-        console.log("올림", this.wordSize, this.words.length);
+        console.log("올림", this.wordSize, this.words.length, this.words);
         this.words.push(this.selectWord);
         this.selectWord = "";
       }
@@ -102,14 +138,9 @@ export default {
     wordList() {
       var objDiv = document.getElementById("word__list");
       if (objDiv.scrollTop + objDiv.clientHeight == objDiv.scrollHeight) {
-        // 채팅창 전체높이 + 스크롤높이가 스크롤 전체높이와 같다면
-        // 이는 스크롤이 바닥을 향해있다는것이므로
-        // 스크롤 바닥을 유지하도록 플래그 설정
         this.bottom_flag = true;
       }
       if (this.pre_diffHeight > objDiv.scrollTop + objDiv.clientHeight) {
-        // 스크롤이 한번이라도 바닥이 아닌 위로 상승하는 액션이 발생할 경우
-        // 스크롤 바닥유지 플래그 해제
         this.bottom_flag = false;
       }
       //
@@ -119,13 +150,11 @@ export default {
   updated: function() {
     var objDiv = document.getElementById("word__list");
     if (this.bottom_flag) {
-      // 채팅창 스크롤 바닥 유지
       objDiv.scrollTop = objDiv.scrollHeight;
     }
   },
   computed: {
     sizesCalculation() {
-      console.log("잉");
       this.wordSize = 1;
       this.selectSizes.split("x").forEach(e => {
         this.wordSize *= e;
@@ -146,7 +175,9 @@ export default {
 .v-list {
   margin: auto;
 }
-
+.list-group {
+  padding: 0px 12px 0px 12px;
+}
 .edit__title {
   font-family: "NanumSEB";
   color: #6c63ff;
@@ -172,5 +203,78 @@ export default {
 .word__list::-webkit-scrollbar-thumb {
   background: #6c63ff;
   border-radius: 30px;
+}
+.bingo__frame {
+  position: relative;
+  width: 40%;
+  border: 1px solid black;
+}
+.bingo__frame:before {
+  content: "";
+  display: block;
+  padding-top: 100%;
+}
+.bingo__content {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  display: flex;
+  flex-wrap: wrap;
+}
+.bingo__title {
+  font-size: 32px;
+  font-family: "NanumSB";
+}
+.four__size {
+  width: 50%;
+  height: 50%;
+  border: 1px solid black;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+.nine__size {
+  width: 33.333333%;
+  height: 33.33333%;
+  border: 1px solid black;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+.sixteen__size {
+  width: 25%;
+  height: 25%;
+  border: 1px solid black;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+.twentyFive__size {
+  width: 20%;
+  height: 20%;
+  border: 1px solid black;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+.thirtySix__size {
+  width: 16.6666666%;
+  height: 16.6666666%;
+  border: 1px solid black;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+@media screen and (max-width: 768px) {
+  .bingo__frame {
+    width: 90% !important;
+  }
 }
 </style>
