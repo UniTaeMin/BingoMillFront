@@ -14,6 +14,7 @@ const routes = [
     name: 'Edit',
     component: () => import('../views/Edit.vue')
   },
+
 ]
 
 const router = new VueRouter({

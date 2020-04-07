@@ -4,8 +4,11 @@ import router from './router'
 import store from './store'
 import vuetify from './plugins/vuetify';
 import Sortable from 'vue-sortable'
+import VueHtml2Canvas from 'vue-html2canvas';
+import 'babel-polyfill'; //add this line
 
 Vue.use(Sortable)
+Vue.use(VueHtml2Canvas);
 Vue.config.productionTip = false
 
 new Vue({

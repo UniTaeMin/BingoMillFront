@@ -70,10 +70,18 @@
     <v-app-bar app clipped-left color="white" :flat="true">
       <v-app-bar-nav-icon @click.stop="drawer = !drawer" color="#6c63ff" />
       <v-toolbar-title class="edit__title pa-1">빙고 제작소</v-toolbar-title>
+      <v-spacer />
+      <div @click="print()" class="nav__text">이미지 다운</div>
     </v-app-bar>
     <v-content style="background-color: #f1f1fa">
       <v-container class="fill-height" fluid>
-        <v-row align="center" justify="center" class="fill-height" style="flex-direction:column">
+        <v-row
+          align="center"
+          justify="center"
+          class="fill-height"
+          style="flex-direction:column;"
+          ref="printMe"
+        >
           <div class="bingo__title">{{selectTitle}}</div>
           <div class="bingo__frame">
             <div class="bingo__content">
@@ -102,7 +110,8 @@
 
 <script>
 import draggable from "vuedraggable";
-
+import html2canvas from "html2canvas";
+import jsPDF from "jspdf";
 export default {
   data() {
     return {
@@ -114,7 +123,8 @@ export default {
       drawer: null,
       words: [],
       pre_diffHeight: 0,
-      bottom_flag: true
+      bottom_flag: true,
+      output: null
     };
   },
   components: {
@@ -122,12 +132,61 @@ export default {
   },
   created() {},
   methods: {
-    checkMove() {
-      console.log(this.words);
+    print() {
+      // window.html2canvas = html2canvas; //Vue.js 특성상 window 객체에 직접 할당해야한다.
+      // let that = this;
+      // let pdf = new jsPDF("p", "mm", "a4");
+      // let canvas = pdf.canvas;
+      // const pageWidth = 210; //캔버스 너비 mm
+      // const pageHeight = 295; //캔버스 높이 mm
+      // canvas.width = pageWidth;
+      // let ele = this.$refs.printMe;
+      // let width = ele.offsetWidth; // 셀렉트한 요소의 px 너비
+      // let height = ele.offsetHeight; // 셀렉트한 요소의 px 높이
+      // let imgHeight = (pageWidth * height) / width; // 이미지 높이값 px to mm 변환
+      // if (!ele) {
+      //   console.warn(selector + " is not exist.");
+      //   return false;
+      // }
+      // //html2canvas(ele,{});
+      // html2canvas(ele).then(function(canvas) {
+      //   let position = 0;
+      //   const imgData = canvas.toDataURL("image/png");
+      //   pdf.addImage(
+      //     imgData,
+      //     "png",
+      //     0,
+      //     position,
+      //     pageWidth,
+      //     imgHeight,
+      //     undefined,
+      //     "slow"
+      //   );
+      //   //Paging 처리
+      //   let heightLeft = imgHeight; //페이징 처리를 위해 남은 페이지 높이 세팅.
+      //   heightLeft -= pageHeight;
+      //   while (heightLeft >= 0) {
+      //     position = heightLeft - imgHeight;
+      //     pdf.addPage();
+      //     pdf.addImage(imgData, "png", 0, position, pageWidth, imgHeight);
+      //     heightLeft -= pageHeight;
+      //   }
+      //   pdf.save(that.selectTitle.toLowerCase() + ".png");
+      // });
+      var vm = this;
+      let ele = this.$refs.printMe;
+      var image;
+      html2canvas(ele).then(function(canvas) {
+        var image = canvas.toDataURL("image/png"); //.replace("image/png", "image/octet-stream");
+        var link = document.createElement("a");
+        link.href = image;
+        link.download = "bingo.png";
+        document.body.appendChild(link);
+        link.click();
+      });
     },
     wordCreate() {
       if (this.selectWord != "" && this.words.length != this.wordSize) {
-        console.log("올림", this.wordSize, this.words.length, this.words);
         this.words.push(this.selectWord);
         this.selectWord = "";
       }
@@ -172,6 +231,12 @@ export default {
 .v-app-bar {
   border-bottom: 1px solid rgba(0, 0, 0, 0.12) !important;
 }
+.nav__text {
+  font-family: "NanumSEB";
+  color: #6c63ff;
+  font-size: 17px;
+  cursor: pointer;
+}
 .v-list {
   margin: auto;
 }
@@ -191,7 +256,7 @@ export default {
 }
 .word__list {
   padding: 8px 16px;
-  height: 53vh;
+  height: 50vh;
   overflow-y: auto;
 }
 .word__list::-webkit-scrollbar {
@@ -206,7 +271,7 @@ export default {
 }
 .bingo__frame {
   position: relative;
-  width: 40%;
+  width: 35%;
   border: 1px solid black;
 }
 .bingo__frame:before {
@@ -224,8 +289,9 @@ export default {
   flex-wrap: wrap;
 }
 .bingo__title {
-  font-size: 32px;
+  font-size: 44px;
   font-family: "NanumSB";
+  margin-bottom: 10px;
 }
 .four__size {
   width: 50%;
