@@ -16,7 +16,7 @@
           <v-select
             :items="sizes"
             label="크기"
-            prepend-icon="person"
+            prepend-icon="crop_original"
             value="dd"
             class="pa-0"
             v-model="selectSizes"
@@ -27,7 +27,7 @@
         <v-list-item>
           <v-text-field
             label="단어"
-            prepend-icon="person"
+            prepend-icon="subject"
             color="#6c63ff"
             class="pa-0"
             v-model="selectWord"
@@ -69,11 +69,14 @@
     </v-navigation-drawer>
     <v-app-bar app clipped-left color="white" :flat="true">
       <v-app-bar-nav-icon @click.stop="drawer = !drawer" color="#6c63ff" />
-      <v-toolbar-title class="edit__title pa-1">빙고 제작소</v-toolbar-title>
+      <v-toolbar-title class="edit__title pa-1" @click="main()">빙고 제작소</v-toolbar-title>
       <v-spacer />
-      <div @click="print()" class="nav__text">이미지 다운</div>
+      <div style="display:flex; flex-wrap:wrap; justify-content:flex-end">
+        <div @click="modal()" class="nav__text">박물관업로드</div>
+        <div @click="print()" class="nav__text">빙고다운</div>
+      </div>
     </v-app-bar>
-    <v-content style="background-color: #f1f1fa">
+    <v-content style="background-color: #f1f1fa;">
       <v-container class="fill-height" fluid>
         <v-row
           align="center"
@@ -105,6 +108,51 @@
         </v-row>
       </v-container>
     </v-content>
+    <div class="modal" v-if="modalState">
+      <div class="modal__content">
+        <div class="modal__title">박물관 업로드</div>
+        <div class="modal__text">
+          <v-text-field
+            label="닉네임"
+            prepend-icon="subject"
+            color="#6c63ff"
+            class="pa-0"
+            v-model="selectWord"
+            v-on:keyup.enter="wordCreate"
+            style="width:100%"
+          ></v-text-field>
+          <v-text-field
+            label="비밀번호"
+            prepend-icon="subject"
+            color="#6c63ff"
+            class="pa-0"
+            v-model="selectWord"
+            v-on:keyup.enter="wordCreate"
+            style="width:100%"
+          ></v-text-field>
+          <v-text-field
+            label="제목"
+            prepend-icon="subject"
+            color="#6c63ff"
+            class="pa-0"
+            v-model="selectWord"
+            v-on:keyup.enter="wordCreate"
+            style="width:100%"
+          ></v-text-field>
+        </div>
+        <div style=" width:85%;">
+          <v-btn
+            @click="wordCreate()"
+            color="#6c63ff"
+            style="color:white; font-weight: bold;"
+            width="100%"
+            rounded
+          >업로드</v-btn>
+        </div>
+        <div></div>
+      </div>
+      <div class="modal__shadow" @click="deModal"></div>
+    </div>
   </v-app>
 </template>
 
@@ -116,63 +164,35 @@ export default {
   data() {
     return {
       selectTitle: "빙고",
-      selectSizes: "5x5",
-      wordSize: 25,
+      selectSizes: "4x4",
+      wordSize: 16,
       selectWord: "",
       sizes: ["2x2", "3x3", "4x4", "5x5", "6x6"],
       drawer: null,
       words: [],
       pre_diffHeight: 0,
       bottom_flag: true,
-      output: null
+      output: null,
+      modalState: false
     };
   },
   components: {
     draggable
   },
-  created() {},
+  created() {
+    this.modalState = false;
+  },
   methods: {
+    modal() {
+      this.modalState = true;
+    },
+    deModal() {
+      this.modalState = false;
+    },
+    main() {
+      this.$router.push("/");
+    },
     print() {
-      // window.html2canvas = html2canvas; //Vue.js 특성상 window 객체에 직접 할당해야한다.
-      // let that = this;
-      // let pdf = new jsPDF("p", "mm", "a4");
-      // let canvas = pdf.canvas;
-      // const pageWidth = 210; //캔버스 너비 mm
-      // const pageHeight = 295; //캔버스 높이 mm
-      // canvas.width = pageWidth;
-      // let ele = this.$refs.printMe;
-      // let width = ele.offsetWidth; // 셀렉트한 요소의 px 너비
-      // let height = ele.offsetHeight; // 셀렉트한 요소의 px 높이
-      // let imgHeight = (pageWidth * height) / width; // 이미지 높이값 px to mm 변환
-      // if (!ele) {
-      //   console.warn(selector + " is not exist.");
-      //   return false;
-      // }
-      // //html2canvas(ele,{});
-      // html2canvas(ele).then(function(canvas) {
-      //   let position = 0;
-      //   const imgData = canvas.toDataURL("image/png");
-      //   pdf.addImage(
-      //     imgData,
-      //     "png",
-      //     0,
-      //     position,
-      //     pageWidth,
-      //     imgHeight,
-      //     undefined,
-      //     "slow"
-      //   );
-      //   //Paging 처리
-      //   let heightLeft = imgHeight; //페이징 처리를 위해 남은 페이지 높이 세팅.
-      //   heightLeft -= pageHeight;
-      //   while (heightLeft >= 0) {
-      //     position = heightLeft - imgHeight;
-      //     pdf.addPage();
-      //     pdf.addImage(imgData, "png", 0, position, pageWidth, imgHeight);
-      //     heightLeft -= pageHeight;
-      //   }
-      //   pdf.save(that.selectTitle.toLowerCase() + ".png");
-      // });
       var vm = this;
       let ele = this.$refs.printMe;
       var image;
@@ -236,6 +256,7 @@ export default {
   color: #6c63ff;
   font-size: 17px;
   cursor: pointer;
+  margin: 0 4px;
 }
 .v-list {
   margin: auto;
@@ -243,9 +264,63 @@ export default {
 .list-group {
   padding: 0px 12px 0px 12px;
 }
+.modal {
+  position: absolute;
+  top: 0px;
+  right: 0px;
+  left: 0px;
+  bottom: 0px;
+  width: 100%;
+  height: 100%;
+  z-index: 100;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.modal__content {
+  width: 40%;
+  background-color: white;
+  height: 450px;
+  z-index: 100;
+  border-radius: 20px;
+  display: flex;
+  padding: 20px 0px;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+}
+.modal__text {
+  width: 85%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 20px;
+  flex-direction: column;
+}
+.modal__shadow {
+  background-color: rgba(0, 0, 0, 0.2);
+  width: 100%;
+  height: 100%;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0px;
+  right: 0px;
+  left: 0px;
+  bottom: 0px;
+  z-index: 2;
+}
+.modal__title {
+  font-family: "NanumSEB";
+  color: #6c63ff;
+  font-size: 26px;
+  text-align: center;
+  margin-top: 12px;
+}
 .edit__title {
   font-family: "NanumSEB";
   color: #6c63ff;
+  cursor: pointer;
 }
 .word__count {
   width: 100%;
@@ -341,6 +416,9 @@ export default {
 @media screen and (max-width: 768px) {
   .bingo__frame {
     width: 90% !important;
+  }
+  .modal__content {
+    width: 75%;
   }
 }
 </style>
