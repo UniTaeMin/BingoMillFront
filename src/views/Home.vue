@@ -3,7 +3,7 @@
     <img src="../assets/bingoLanding.svg" alt="빙고 사진" class="landingImage" />
     <div class="home__title">빙고 제작소</div>
     <div class="home__start" @click="start">빙고 만들기</div>
-    <div class="home__museum">빙고 박물관</div>
+    <div class="home__museum" @click="museum">빙고 박물관</div>
   </div>
 </template>
 
@@ -14,6 +14,9 @@ export default {
   methods: {
     start() {
       this.$router.push("/edit");
+    },
+    museum() {
+      this.$router.push("/museum");
     }
   }
 };
