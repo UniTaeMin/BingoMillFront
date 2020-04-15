@@ -9,6 +9,19 @@ export default new Vuex.Store({
   mutations: {
   },
   actions: {
+    UpLoad({ commit, state }, data) {
+      return new Promise((resolve, reject) => {
+        axios
+          .post("", data)
+          .then(value => {
+            console.log(value);
+            resolve(value);
+          })
+          .catch(err => {
+            reject(err);
+          });
+      });
+    },
   },
   modules: {
   }

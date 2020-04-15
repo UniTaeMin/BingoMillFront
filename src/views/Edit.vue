@@ -117,8 +117,8 @@
             prepend-icon="subject"
             color="#6c63ff"
             class="pa-0"
-            v-model="selectWord"
-            v-on:keyup.enter="wordCreate"
+            v-model="username"
+            v-on:keyup.enter="upLoad"
             style="width:100%"
           ></v-text-field>
           <v-text-field
@@ -126,8 +126,8 @@
             prepend-icon="subject"
             color="#6c63ff"
             class="pa-0"
-            v-model="selectWord"
-            v-on:keyup.enter="wordCreate"
+            v-model="password"
+            v-on:keyup.enter="upLoad"
             style="width:100%"
           ></v-text-field>
           <v-text-field
@@ -135,14 +135,14 @@
             prepend-icon="subject"
             color="#6c63ff"
             class="pa-0"
-            v-model="selectWord"
-            v-on:keyup.enter="wordCreate"
+            v-model="title"
+            v-on:keyup.enter="upLoad"
             style="width:100%"
           ></v-text-field>
         </div>
         <div style=" width:85%;">
           <v-btn
-            @click="wordCreate()"
+            @click="upLoad()"
             color="#6c63ff"
             style="color:white; font-weight: bold;"
             width="100%"
@@ -173,7 +173,10 @@ export default {
       pre_diffHeight: 0,
       bottom_flag: true,
       output: null,
-      modalState: false
+      modalState: false,
+      username: "",
+      password: "",
+      title: ""
     };
   },
   components: {
@@ -183,6 +186,7 @@ export default {
     this.modalState = false;
   },
   methods: {
+    upLoad() {},
     modal() {
       this.modalState = true;
     },
