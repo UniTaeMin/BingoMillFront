@@ -194,7 +194,9 @@ export default {
         .dispatch("UpLoad", {
           username: this.username,
           password: this.password,
-          title: this.title
+          title: this.title,
+          words: this.words,
+          wordSize: this.wordSize
         })
         .then(res => {
           if (res.data.state == true) {
@@ -203,6 +205,7 @@ export default {
             this.password = "";
             this.title = "";
             this.error = "";
+            this.words = [];
             this.$toasted.show("성공적으로 업로드 하였습니다.", {
               theme: "outline",
               position: "top-right",

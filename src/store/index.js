@@ -15,7 +15,18 @@ export default new Vuex.Store({
         axios
           .post("http://localhost:4000/post/create", data)
           .then(value => {
-            console.log(value);
+            resolve(value);
+          })
+          .catch(err => {
+            reject(err);
+          });
+      });
+    },
+    FindAll({ commit, state }, data) {
+      return new Promise((resolve, reject) => {
+        axios
+          .post("http://localhost:4000/post/findall", data)
+          .then(value => {
             resolve(value);
           })
           .catch(err => {
