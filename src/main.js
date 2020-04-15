@@ -6,10 +6,12 @@ import vuetify from './plugins/vuetify';
 import Sortable from 'vue-sortable'
 import VueHtml2Canvas from 'vue-html2canvas';
 import 'babel-polyfill'; //add this line
+import Toasted from 'vue-toasted';
 
 Vue.config.productionTip = false
 Vue.use(Sortable)
 Vue.use(VueHtml2Canvas);
+Vue.use(Toasted)
 
 new Vue({
   router,

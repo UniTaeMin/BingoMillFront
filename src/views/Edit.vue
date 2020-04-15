@@ -1,6 +1,6 @@
 <template>
   <v-app id="inspire">
-    <v-navigation-drawer v-model="drawer" app clipped width="300">
+    <v-navigation-drawer v-model="drawer" app clipped width="300" style="z-index: 300">
       <!-- :floating="true" -->
       <v-list dense>
         <v-list-item>
@@ -140,6 +140,7 @@
             v-on:keyup.enter="upLoad"
             style="width:100%"
           ></v-text-field>
+          <div class="errorMes">{{error}}</div>
         </div>
         <div style=" width:85%;">
           <v-btn
@@ -177,7 +178,8 @@ export default {
       modalState: false,
       username: "",
       password: "",
-      title: ""
+      title: "",
+      error: ""
     };
   },
   components: {
@@ -195,10 +197,20 @@ export default {
           title: this.title
         })
         .then(res => {
-          this.deModal();
-          this.username = "";
-          this.password = "";
-          this.title = "";
+          if (res.data.state == true) {
+            this.deModal();
+            this.username = "";
+            this.password = "";
+            this.title = "";
+            this.error = "";
+            this.$toasted.show("성공적으로 업로드 하였습니다.", {
+              theme: "outline",
+              position: "top-right",
+              duration: 4000
+            });
+          } else {
+            this.error = res.data.result;
+          }
         });
     },
     modal() {
@@ -430,6 +442,10 @@ export default {
   justify-content: center;
   align-items: center;
   text-align: center;
+}
+.errorMes {
+  font-size: 14px;
+  color: red;
 }
 @media screen and (max-width: 768px) {
   .bingo__frame {

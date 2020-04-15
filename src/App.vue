@@ -48,7 +48,17 @@ body {
   width: 100%;
   height: 100vh;
 }
-
+.toasted-container.top-right {
+  top: 7.5% !important;
+  right: 1.5% !important;
+}
+.toasted.outline {
+  border: 0px !important;
+  color: #6c63ff !important;
+}
+.toasted-container {
+  z-index: 299 !important;
+}
 /* vuetify setting */
 /* .v-navigation-drawer__content {
   display: flex;
