@@ -126,6 +126,7 @@
             prepend-icon="subject"
             color="#6c63ff"
             class="pa-0"
+            :type="'password'"
             v-model="password"
             v-on:keyup.enter="upLoad"
             style="width:100%"
@@ -186,7 +187,20 @@ export default {
     this.modalState = false;
   },
   methods: {
-    upLoad() {},
+    upLoad() {
+      this.$store
+        .dispatch("UpLoad", {
+          username: this.username,
+          password: this.password,
+          title: this.title
+        })
+        .then(res => {
+          this.deModal();
+          this.username = "";
+          this.password = "";
+          this.title = "";
+        });
+    },
     modal() {
       this.modalState = true;
     },
