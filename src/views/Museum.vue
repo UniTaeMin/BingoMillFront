@@ -1,7 +1,7 @@
 <template>
   <v-app id="inspire">
     <v-app-bar app clipped-left color="white" :flat="true">
-      <v-toolbar-title class="edit__title pa-1" @click="main()">빙고 박물관</v-toolbar-title>
+      <v-toolbar-title class="edit__title pa-1">빙고 박물관</v-toolbar-title>
       <v-spacer />
       <div style="display:flex; flex-wrap:wrap; justify-content:flex-end">
         <div @click="first()" class="nav__text">메인으로</div>
@@ -10,10 +10,10 @@
     <v-content style="background-color: #f1f1fa;">
       <v-container fluid>
         <v-row class="fill-height card__wrap">
-          <div v-for="(v,i) in List" :key="i" class="card">
+          <div v-for="(v,i) in List" :key="i" class="card" @click="list(v)">
             <div>
-              <div class="card__title">토트넘 빙고</div>
-              <div class="card__Writer">염태민</div>
+              <div class="card__title">{{v.title}}</div>
+              <div class="card__Writer">{{v.username}}</div>
             </div>
             <div
               style="width:100%; display:flex; justify-content:space-between; align-items:flex-end"
@@ -56,6 +56,9 @@ export default {
   methods: {
     first() {
       this.$router.push("/");
+    },
+    list(res) {
+      this.$router.push(`/museum/${res._id}`);
     }
   }
 };
@@ -66,6 +69,7 @@ export default {
   background-color: white;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
   transition: 0.3s;
+  max-width: 300px;
   min-width: 300px;
   height: 160px;
   border-radius: 10px;

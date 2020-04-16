@@ -19,6 +19,11 @@ const routes = [
     name: 'Museum',
     component: () => import('../views/Museum.vue')
   },
+  {
+    path: '/museum/:id',
+    name: 'MuseumList',
+    component: () => import('../views/MuseumList.vue')
+  },
 
 ]
 

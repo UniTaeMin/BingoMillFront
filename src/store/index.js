@@ -34,6 +34,11 @@ export default new Vuex.Store({
           });
       });
     },
+    MuseumList({ commit, state }, data) {
+      return new Promise((resolve, reject) => {
+
+      })
+    }
   },
   modules: {
   }
