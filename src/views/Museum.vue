@@ -35,7 +35,7 @@
 <script>
 export default {
   created() {
-    this.$store.dispatch("FindAll", { wordSize: this.wordSize }).then(res => {
+    this.$store.dispatch("FindAll").then(res => {
       if (res.data.state == true) {
         this.List = res.data.data;
         console.log(this.List);

@@ -25,7 +25,7 @@ export default new Vuex.Store({
     FindAll({ commit, state }, data) {
       return new Promise((resolve, reject) => {
         axios
-          .post("http://localhost:4000/post/findall", data)
+          .post("http://localhost:4000/post/findall")
           .then(value => {
             resolve(value);
           })
@@ -34,11 +34,18 @@ export default new Vuex.Store({
           });
       });
     },
-    MuseumList({ commit, state }, data) {
+    FindOne({ commit, state }, data) {
       return new Promise((resolve, reject) => {
-
-      })
-    }
+        axios
+          .post("http://localhost:4000/post/findone", data)
+          .then(value => {
+            resolve(value);
+          })
+          .catch(err => {
+            reject(err);
+          });
+      });
+    },
   },
   modules: {
   }

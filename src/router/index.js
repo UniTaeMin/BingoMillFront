@@ -20,7 +20,7 @@ const routes = [
     component: () => import('../views/Museum.vue')
   },
   {
-    path: '/museum/:id',
+    path: '/museum/:_id',
     name: 'MuseumList',
     component: () => import('../views/MuseumList.vue')
   },
