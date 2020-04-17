@@ -17,14 +17,20 @@ const routes = [
   {
     path: '/museum',
     name: 'Museum',
-    component: () => import('../views/Museum.vue')
-  },
-  {
-    path: '/museum/:_id',
-    name: 'MuseumList',
-    component: () => import('../views/MuseumList.vue')
-  },
-
+    component: () => import('../views/Museum.vue'),
+    children: [
+      {
+        path: "",
+        name: "",
+        component: () => import("../views/Museum/Lists.vue"),
+      },
+      {
+        path: ':_id',
+        name: 'MuseumList',
+        component: () => import('../views/Museum/Info.vue')
+      },
+    ]
+  }
 ]
 
 const router = new VueRouter({
