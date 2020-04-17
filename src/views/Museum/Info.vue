@@ -1,18 +1,5 @@
 <template>
-  <v-app id="inspire">
-    <v-app-bar app clipped-left color="white" :flat="true">
-      <v-toolbar-title class="edit__title pa-1">토트넘 페이지</v-toolbar-title>
-      <v-spacer />
-      <div style="display:flex; flex-wrap:wrap; justify-content:flex-end">
-        <div @click="first()" class="nav__text">메인으로</div>
-      </div>
-    </v-app-bar>
-    <v-content style="background-color: #f1f1fa;">
-      <v-container fluid>
-        <v-row class="fill-height card__wrap"></v-row>
-      </v-container>
-    </v-content>
-  </v-app>
+  <v-row class="fill-height card__wrap">dd</v-row>
 </template>
 
 <script>
@@ -42,9 +29,6 @@ export default {
   methods: {
     first() {
       this.$router.push("/");
-    },
-    list(res) {
-      this.$router.push(`/museum/${res._id}`);
     }
   }
 };
