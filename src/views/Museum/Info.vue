@@ -1,5 +1,7 @@
 <template>
-  <v-row class="fill-height card__wrap">dd</v-row>
+  <div style="width:100%;">
+    <v-row class="fill-height card__wrap">dd</v-row>
+  </div>
 </template>
 
 <script>

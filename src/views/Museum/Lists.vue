@@ -1,20 +1,22 @@
 <template>
-  <v-row class="fill-height card__wrap">
-    <div v-for="(v,i) in List" :key="i" class="card" @click="list(v)">
-      <div>
-        <div class="card__title">{{v.title}}</div>
-        <div class="card__Writer">{{v.username}}</div>
+  <div style="width:100%;">
+    <v-row class="fill-height card__wrap">
+      <div v-for="(v,i) in List" :key="i" class="card" @click="list(v)">
+        <div>
+          <div class="card__title">{{v.title}}</div>
+          <div class="card__Writer">{{v.username}}</div>
+        </div>
+        <div style="width:100%; display:flex; justify-content:space-between; align-items:flex-end">
+          <div class="card__day">{{v.time}}</div>
+          <div v-if="v.wordSize == 4" class="card__bingo__size" style="color: #BE52F2">2x2</div>
+          <div v-if="v.wordSize == 9" class="card__bingo__size" style="color: #FFCF5C">3x3</div>
+          <div v-if="v.wordSize == 16" class="card__bingo__size" style="color: #0084F4">4x4</div>
+          <div v-if="v.wordSize == 25" class="card__bingo__size" style="color: #6979F8">5x5</div>
+          <div v-if="v.wordSize == 36" class="card__bingo__size" style="color: #00C48C">6x6</div>
+        </div>
       </div>
-      <div style="width:100%; display:flex; justify-content:space-between; align-items:flex-end">
-        <div class="card__day">{{v.time}}</div>
-        <div v-if="v.wordSize == 4" class="card__bingo__size" style="color: #BE52F2">2x2</div>
-        <div v-if="v.wordSize == 9" class="card__bingo__size" style="color: #FFCF5C">3x3</div>
-        <div v-if="v.wordSize == 16" class="card__bingo__size" style="color: #0084F4">4x4</div>
-        <div v-if="v.wordSize == 25" class="card__bingo__size" style="color: #6979F8">5x5</div>
-        <div v-if="v.wordSize == 36" class="card__bingo__size" style="color: #00C48C">6x6</div>
-      </div>
-    </div>
-  </v-row>
+    </v-row>
+  </div>
 </template>
 
 <script>

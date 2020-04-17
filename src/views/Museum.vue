@@ -9,7 +9,9 @@
     </v-app-bar>
     <v-content style="background-color: #f1f1fa;">
       <v-container fluid>
-        <router-view />
+        <transition name="fade">
+          <router-view />
+        </transition>
       </v-container>
     </v-content>
   </v-app>
@@ -40,5 +42,20 @@ export default {
   font-family: "NanumSEB";
   color: #6c63ff;
   cursor: pointer;
+}
+.fade-enter-active,
+.fade-leave-active {
+  transition: 0.5s;
+  position: absolute;
+}
+.fade-enter,
+.fade-leave-to {
+  opacity: 0;
+  transform: scale(0.9);
+}
+.fade-enter-to,
+.fade-leave {
+  opacity: 1;
+  transform: scale(1);
 }
 </style>
