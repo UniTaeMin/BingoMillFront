@@ -25,7 +25,6 @@ export default {
     this.$store.dispatch("FindAll").then(res => {
       if (res.data.state == true) {
         this.List = res.data.data;
-        console.log(this.List);
       } else {
         this.$toasted.show("Error", {
           theme: "outline",
