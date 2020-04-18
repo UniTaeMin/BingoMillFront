@@ -1,6 +1,8 @@
 <template>
-  <div style="width:100%;">
-    <v-row class="fill-height card__wrap">dd</v-row>
+  <div style="width:100%; height:100%; padding: 12px;">
+    <v-row class="fill-height">
+      <div class="box"></div>
+    </v-row>
   </div>
 </template>
 
@@ -96,5 +98,11 @@ export default {
 .row {
   margin-left: auto !important;
   margin-right: auto !important;
+}
+.box {
+  width: 100%;
+  height: 100%;
+  background-color: white;
+  border-radius: 30px;
 }
 </style>

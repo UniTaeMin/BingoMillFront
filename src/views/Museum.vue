@@ -8,11 +8,9 @@
       </div>
     </v-app-bar>
     <v-content style="background-color: #f1f1fa;">
-      <v-container fluid>
-        <transition name="fade">
-          <router-view />
-        </transition>
-      </v-container>
+      <transition name="fade">
+        <router-view />
+      </transition>
     </v-content>
   </v-app>
 </template>

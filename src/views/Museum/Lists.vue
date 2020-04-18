@@ -1,5 +1,5 @@
 <template>
-  <div style="width:100%;">
+  <div style="width:100%; padding: 12px;">
     <v-row class="fill-height card__wrap">
       <div v-for="(v,i) in List" :key="i" class="card" @click="list(v)">
         <div>
