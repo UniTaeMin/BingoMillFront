@@ -5,7 +5,7 @@
       <v-list dense>
         <v-list-item>
           <v-text-field
-            label="제목"
+            label="제목( 2 ~ 22 )"
             prepend-icon="person"
             color="#6c63ff"
             class="pa-0"
@@ -132,15 +132,6 @@
             v-on:keyup.enter="upLoad"
             style="width:100%"
           ></v-text-field>
-          <v-text-field
-            label="제목"
-            prepend-icon="subject"
-            color="#6c63ff"
-            class="pa-0"
-            v-model="title"
-            v-on:keyup.enter="upLoad"
-            style="width:100%"
-          ></v-text-field>
           <div class="errorMes">{{error}}</div>
         </div>
         <div style=" width:85%;">
@@ -179,7 +170,6 @@ export default {
       modalState: false,
       username: "",
       password: "",
-      title: "",
       error: ""
     };
   },
@@ -195,7 +185,7 @@ export default {
         .dispatch("UpLoad", {
           username: this.username,
           password: this.password,
-          title: this.title,
+          title: this.selectTitle,
           words: this.words,
           wordSize: this.wordSize
         })
@@ -204,7 +194,7 @@ export default {
             this.deModal();
             this.username = "";
             this.password = "";
-            this.title = "";
+            this.selectTitle = "";
             this.error = "";
             this.selectWord = " ";
             this.words = [];
