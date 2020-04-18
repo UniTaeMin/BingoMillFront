@@ -46,6 +46,18 @@ export default new Vuex.Store({
           });
       });
     },
+    Delete({ commit, state }, data) {
+      return new Promise((resolve, reject) => {
+        axios
+          .delete("http://localhost:4000/post/delete", { data: data })
+          .then(value => {
+            resolve(value);
+          })
+          .catch(err => {
+            reject(err);
+          });
+      });
+    },
   },
   modules: {
   }
