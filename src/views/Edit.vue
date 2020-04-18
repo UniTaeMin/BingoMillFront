@@ -54,7 +54,7 @@
               @end="drag = false"
             >
               <template v-for="(word, i) in words">
-                <v-list-item :key="`${i}-${word}`">
+                <v-list-item :key="`${i}-${word}`" style="cursor:pointer">
                   <div>{{word}}</div>
                   <v-spacer></v-spacer>
                   <v-scroll-x-transition>
@@ -206,6 +206,7 @@ export default {
             this.password = "";
             this.title = "";
             this.error = "";
+            this.selectWord = " ";
             this.words = [];
             this.$toasted.show("성공적으로 업로드 하였습니다.", {
               theme: "outline",
@@ -225,6 +226,7 @@ export default {
       this.password = "";
       this.title = "";
       this.modalState = false;
+      this.error = "";
     },
     main() {
       this.$router.push("/");
