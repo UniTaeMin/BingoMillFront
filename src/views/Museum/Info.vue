@@ -2,7 +2,7 @@
   <div style="width:100%; height:100%; padding: 16px;">
     <v-row class="fill-height">
       <div class="box">
-        <img src="@/assets/arrow_back.svg" alt="화살표" width="32px" class="arrow" />
+        <img src="@/assets/arrow_back.svg" alt="화살표" width="32px" class="arrow" @click="meseum" />
       </div>
     </v-row>
   </div>
@@ -35,6 +35,9 @@ export default {
   methods: {
     first() {
       this.$router.push("/");
+    },
+    meseum() {
+      this.$router.push("/museum");
     }
   }
 };
