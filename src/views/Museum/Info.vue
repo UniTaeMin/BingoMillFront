@@ -114,6 +114,7 @@ export default {
 .arrow {
   position: absolute;
   top: 40px;
-  left: 40px;
+  left: 30px;
+  cursor: pointer;
 }
 </style>

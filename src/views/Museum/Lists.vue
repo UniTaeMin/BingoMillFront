@@ -59,6 +59,7 @@ export default {
   border-radius: 10px;
   padding: 17px 20px;
   margin: 10px 10px;
+  cursor: pointer;
   display: flex;
   justify-content: space-between;
   flex-direction: column;

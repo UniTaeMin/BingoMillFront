@@ -1,7 +1,7 @@
 <template>
   <v-app id="inspire">
     <v-app-bar app clipped-left color="white" :flat="true">
-      <v-toolbar-title class="edit__title pa-1">빙고 박물관</v-toolbar-title>
+      <v-toolbar-title class="edit__title pa-1" @click="museum()">빙고 박물관</v-toolbar-title>
       <v-spacer />
       <div style="display:flex; flex-wrap:wrap; justify-content:flex-end">
         <div @click="first()" class="nav__text">메인으로</div>
@@ -23,6 +23,11 @@ export default {
     },
     list(res) {
       this.$router.push(`/museum/${res._id}`);
+    },
+    museum() {
+      if (window.location.pathname != "/museum") {
+        this.$router.push("/museum");
+      }
     }
   }
 };
