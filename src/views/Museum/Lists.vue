@@ -99,4 +99,10 @@ export default {
   margin-left: auto !important;
   margin-right: auto !important;
 }
+@media screen and (max-width: 768px) {
+  .card__wrap {
+    width: 100%;
+    justify-content: center;
+  }
+}
 </style>

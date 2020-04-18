@@ -3,7 +3,7 @@
     <v-row class="fill-height">
       <div class="box">
         <img src="@/assets/arrow_back.svg" alt="화살표" width="32px" class="arrow" @click="meseum" />
-        <div class="info__bingo">
+        <div class="info__bingo" ref="printMe2">
           <div class="bingo__frame">
             <div class="bingo__content">
               <template v-if="Data.wordSize == 4">
@@ -41,7 +41,21 @@
             <div class="info__text__box__title">{{Data.title}}</div>
             <div class="info__text__box__username">작성자 : {{Data.username}}</div>
             <div class="info__text__box__time">작성일 : {{Data.time}}</div>
-            <div class="info__text__box__download">다운로드</div>
+            <div class="info__text__box__download" @click="print">다운로드</div>
+            <div class="info__text__box__image">
+              <template v-if="random == 0">
+                <img src="../../assets/bingo1.svg" alt="빙고" height="100%" class="bingo__image" />
+              </template>
+              <template v-if="random == 1">
+                <img src="../../assets/bingo2.svg" alt="빙고" height="100%" class="bingo__image" />
+              </template>
+              <template v-if="random == 2">
+                <img src="../../assets/bingo3.svg" alt="빙고" height="100%" class="bingo__image" />
+              </template>
+              <template v-if="random == 3">
+                <img src="../../assets/bingo4.svg" alt="빙고" height="100%" class="bingo__image" />
+              </template>
+            </div>
           </div>
         </div>
       </div>
@@ -50,15 +64,16 @@
 </template>
 
 <script>
+import html2canvas from "html2canvas";
+import jsPDF from "jspdf";
 export default {
   created() {
-    console.log(this.$route.params._id);
+    this.random = Math.floor(Math.random() * 4);
     this.$store
       .dispatch("FindOne", { _id: this.$route.params._id })
       .then(res => {
         if (res.data.state == true) {
           this.Data = res.data.data[0];
-          console.log(this.Data);
         } else {
           this.$toasted.show("Error", {
             theme: "outline",
@@ -70,7 +85,8 @@ export default {
   },
   data() {
     return {
-      Data: []
+      Data: [],
+      random: 0
     };
   },
   methods: {
@@ -79,6 +95,19 @@ export default {
     },
     meseum() {
       this.$router.push("/museum");
+    },
+    print() {
+      var vm = this;
+      let ele = this.$refs.printMe2;
+      var image;
+      html2canvas(ele).then(function(canvas) {
+        var image = canvas.toDataURL("image/png"); //.replace("image/png", "image/octet-stream");
+        var link = document.createElement("a");
+        link.href = image;
+        link.download = "bingo.png";
+        document.body.appendChild(link);
+        link.click();
+      });
     }
   }
 };
@@ -161,7 +190,7 @@ export default {
   cursor: pointer;
 }
 .info__bingo {
-  width: 50%;
+  width: fit-content;
   height: 100%;
   padding: 30px 30px 30px 30px;
   display: flex;
@@ -170,7 +199,7 @@ export default {
   font-size: 16px;
 }
 .info__text {
-  width: 50%;
+  width: fit-content;
   height: 100%;
   display: flex;
   justify-content: flex-start;
@@ -281,6 +310,11 @@ export default {
   background-color: #6c63ff;
   color: white;
 }
+.info__text__box__image {
+  box-sizing: border-box;
+  padding: 20px 5px;
+  height: calc(100% - 160px);
+}
 @media screen and (max-width: 1200px) {
   .bingo__frame {
     width: 400px;
@@ -300,7 +334,7 @@ export default {
 @media screen and (max-width: 768px) {
   .info__bingo {
     width: 100%;
-    height: 50%;
+    height: fit-content;
     justify-content: center;
     align-items: flex-end;
   }
@@ -311,6 +345,7 @@ export default {
   }
   .box {
     flex-direction: column;
+    height: fit-content;
   }
   .bingo__frame {
     width: 300px;
@@ -322,6 +357,9 @@ export default {
     width: 100%;
     height: 100%;
     padding: 0px 30px;
+  }
+  .bingo__image {
+    height: 200px;
   }
 }
 @media screen and (max-width: 400px) {
@@ -341,6 +379,9 @@ export default {
   .info__text__box {
     width: 100%;
     padding: 0px 28px;
+  }
+  .bingo__image {
+    width: 100%;
   }
 }
 </style>
