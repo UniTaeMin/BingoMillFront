@@ -172,6 +172,7 @@ export default {
     deModal() {
       this.password = "";
       this.modalState = false;
+      this.error = "";
     }
   }
 };
@@ -405,6 +406,10 @@ export default {
   right: 30px;
   top: 20px;
   cursor: pointer;
+}
+.errorMes {
+  font-size: 14px;
+  color: red;
 }
 .modal {
   position: absolute;
