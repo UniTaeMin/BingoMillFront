@@ -114,7 +114,7 @@
         <div class="modal__text">
           <v-text-field
             label="닉네임"
-            prepend-icon="subject"
+            prepend-icon="people"
             color="#6c63ff"
             class="pa-0"
             v-model="username"
@@ -123,7 +123,7 @@
           ></v-text-field>
           <v-text-field
             label="비밀번호"
-            prepend-icon="subject"
+            prepend-icon="vpn_key"
             color="#6c63ff"
             class="pa-0"
             :type="'password'"
