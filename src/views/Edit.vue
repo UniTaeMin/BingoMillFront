@@ -110,6 +110,7 @@
     </v-content>
     <div class="modal" v-if="modalState">
       <div class="modal__content">
+        <img src="@/assets/clear.svg" class="modal__image" width="26px" alt="뒤로가기" @click="deModal" />
         <div class="modal__title">박물관 업로드</div>
         <div class="modal__text">
           <v-text-field
@@ -220,6 +221,9 @@ export default {
       this.modalState = true;
     },
     deModal() {
+      this.username = "";
+      this.password = "";
+      this.title = "";
       this.modalState = false;
     },
     main() {
@@ -233,7 +237,11 @@ export default {
         var image = canvas.toDataURL("image/png"); //.replace("image/png", "image/octet-stream");
         var link = document.createElement("a");
         link.href = image;
-        link.download = "bingo.png";
+        if (vm.selectTitle) {
+          link.download = vm.selectTitle + ".png";
+        } else {
+          link.download = "bingo.png";
+        }
         document.body.appendChild(link);
         link.click();
       });
@@ -321,6 +329,13 @@ export default {
   flex-direction: column;
   align-items: center;
   justify-content: space-between;
+  position: relative;
+}
+.modal__image {
+  position: absolute;
+  right: 30px;
+  top: 20px;
+  cursor: pointer;
 }
 .modal__text {
   width: 85%;
