@@ -54,7 +54,8 @@ export default {
   transition: 0.3s;
   max-width: 300px;
   min-width: 300px;
-  height: 160px;
+  height: fit-content;
+  min-height: 160px;
   border-radius: 10px;
   padding: 17px 20px;
   margin: 10px 10px;
