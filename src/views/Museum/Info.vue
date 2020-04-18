@@ -1,7 +1,9 @@
 <template>
-  <div style="width:100%; height:100%; padding: 12px;">
+  <div style="width:100%; height:100%; padding: 16px;">
     <v-row class="fill-height">
-      <div class="box"></div>
+      <div class="box">
+        <img src="@/assets/arrow_back.svg" alt="화살표" width="32px" class="arrow" />
+      </div>
     </v-row>
   </div>
 </template>
@@ -52,6 +54,7 @@ export default {
   display: flex;
   justify-content: space-between;
   flex-direction: column;
+  position: relative;
 }
 .card:hover {
   box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.267);
@@ -104,5 +107,10 @@ export default {
   height: 100%;
   background-color: white;
   border-radius: 30px;
+}
+.arrow {
+  position: absolute;
+  top: 40px;
+  left: 40px;
 }
 </style>
