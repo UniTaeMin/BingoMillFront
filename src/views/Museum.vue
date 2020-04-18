@@ -7,7 +7,7 @@
         <div @click="first()" class="nav__text">메인으로</div>
       </div>
     </v-app-bar>
-    <v-content style="background-color: #f1f1fa;">
+    <v-content style="background-color: #f1f1fa; height:100%;">
       <transition name="fade">
         <router-view />
       </transition>

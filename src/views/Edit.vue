@@ -387,6 +387,11 @@ export default {
   display: block;
   padding-top: 100%;
 }
+.bingo__title {
+  font-size: 44px;
+  font-family: "NanumSB";
+  margin-bottom: 10px;
+}
 .bingo__content {
   position: absolute;
   top: 0;
@@ -395,11 +400,6 @@ export default {
   left: 0;
   display: flex;
   flex-wrap: wrap;
-}
-.bingo__title {
-  font-size: 44px;
-  font-family: "NanumSB";
-  margin-bottom: 10px;
 }
 .four__size {
   width: 50%;
