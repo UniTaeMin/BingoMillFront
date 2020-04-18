@@ -41,7 +41,10 @@
             <div class="info__text__box__title">{{Data.title}}</div>
             <div class="info__text__box__username">작성자 : {{Data.username}}</div>
             <div class="info__text__box__time">작성일 : {{Data.time}}</div>
-            <div class="info__text__box__download" @click="print">다운로드</div>
+            <div style="width:100%; display:flex; flex-wrap:wrap">
+              <div class="info__text__box__download" @click="print" style="margin-right:6px">다운로드</div>
+              <div class="info__text__box__delete" @click="deleteBingo">삭제</div>
+            </div>
             <div class="info__text__box__image">
               <template v-if="random == 0">
                 <img src="../../assets/bingo1.svg" alt="빙고" height="100%" class="bingo__image" />
@@ -60,6 +63,36 @@
         </div>
       </div>
     </v-row>
+    <div class="modal" v-if="modalState">
+      <div class="modal__content">
+        <img src="@/assets/clear.svg" class="modal__image" width="26px" alt="뒤로가기" @click="deModal" />
+        <div class="modal__title">빙고 삭제</div>
+        <div class="modal__text">
+          <v-text-field
+            label="비밀번호"
+            prepend-icon="vpn_key"
+            color="#6c63ff"
+            class="pa-0"
+            :type="'password'"
+            v-model="password"
+            v-on:keyup.enter="upLoad"
+            style="width:100%"
+          ></v-text-field>
+          <div class="errorMes">{{error}}</div>
+        </div>
+        <div style=" width:85%;">
+          <v-btn
+            @click="Delete()"
+            color="#6c63ff"
+            style="color:white; font-weight: bold;"
+            width="100%"
+            rounded
+          >빙고 삭제</v-btn>
+        </div>
+        <div></div>
+      </div>
+      <div class="modal__shadow" @click="deModal"></div>
+    </div>
   </div>
 </template>
 
@@ -86,10 +119,32 @@ export default {
   data() {
     return {
       Data: [],
-      random: 0
+      random: 0,
+      modalState: false,
+      error: "",
+      password: ""
     };
   },
   methods: {
+    Delete() {
+      this.$store
+        .dispatch("Delete", {
+          password: this.password
+        })
+        .then(res => {
+          if (res.data.state == true) {
+            this.deModal();
+            this.$toasted.show("빙고를 성공적으로 삭제하였습니다.", {
+              theme: "outline",
+              position: "top-right",
+              duration: 4000
+            });
+            this.$router.push("/museum");
+          } else {
+            this.error = res.data.result;
+          }
+        });
+    },
     first() {
       this.$router.push("/");
     },
@@ -104,10 +159,17 @@ export default {
         var image = canvas.toDataURL("image/png"); //.replace("image/png", "image/octet-stream");
         var link = document.createElement("a");
         link.href = image;
-        link.download = "bingo.png";
+        link.download = vm.Data.title + ".png";
         document.body.appendChild(link);
         link.click();
       });
+    },
+    deleteBingo() {
+      this.modalState = true;
+    },
+    deModal() {
+      this.password = "";
+      this.modalState = false;
     }
   }
 };
@@ -290,7 +352,7 @@ export default {
   color: #000000;
 }
 .info__text__box__download {
-  width: 160px;
+  width: 150px;
   height: 50px;
   border-radius: 30px;
   border: 3px solid #6c63ff;
@@ -310,10 +372,97 @@ export default {
   background-color: #6c63ff;
   color: white;
 }
+.info__text__box__delete {
+  width: 90px;
+  height: 50px;
+  border-radius: 30px;
+  border: 3px solid #f50057;
+  color: #f50057;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: bold;
+  font-family: "NanumSEB";
+  font-size: 18px;
+  line-height: 1;
+  cursor: pointer;
+  margin-top: 5px;
+  transition: 0.2s;
+}
+.info__text__box__delete:hover {
+  background-color: #f50057;
+  color: white;
+}
 .info__text__box__image {
   box-sizing: border-box;
   padding: 20px 5px;
   height: calc(100% - 160px);
+}
+.modal__image {
+  position: absolute;
+  right: 30px;
+  top: 20px;
+  cursor: pointer;
+}
+.modal {
+  position: absolute;
+  top: 0px;
+  right: 0px;
+  left: 0px;
+  bottom: 0px;
+  width: 100%;
+  height: 100%;
+  z-index: 100;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.modal__content {
+  width: 500px;
+  background-color: white;
+  height: 300px;
+  z-index: 100;
+  border-radius: 20px;
+  display: flex;
+  padding: 20px 0px;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  position: relative;
+}
+.modal__image {
+  position: absolute;
+  right: 30px;
+  top: 20px;
+  cursor: pointer;
+}
+.modal__text {
+  width: 85%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 20px;
+  flex-direction: column;
+}
+.modal__shadow {
+  background-color: rgba(0, 0, 0, 0.2);
+  width: 100%;
+  height: 100%;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0px;
+  right: 0px;
+  left: 0px;
+  bottom: 0px;
+  z-index: 2;
+}
+.modal__title {
+  font-family: "NanumSEB";
+  color: #6c63ff;
+  font-size: 26px;
+  text-align: center;
+  margin-top: 12px;
 }
 @media screen and (max-width: 1200px) {
   .bingo__frame {
@@ -324,6 +473,9 @@ export default {
   }
 }
 @media screen and (max-width: 900px) {
+  .modal__content {
+    width: 90%;
+  }
   .bingo__frame {
     width: 330px;
   }
