@@ -36,7 +36,14 @@
             </div>
           </div>
         </div>
-        <div class="info__text"></div>
+        <div class="info__text">
+          <div class="info__text__box">
+            <div class="info__text__box__title">{{Data.title}}</div>
+            <div class="info__text__box__username">작성자 : {{Data.username}}</div>
+            <div class="info__text__box__time">작성일 : {{Data.time}}</div>
+            <div class="info__text__box__download">다운로드</div>
+          </div>
+        </div>
       </div>
     </v-row>
   </div>
@@ -154,23 +161,28 @@ export default {
   cursor: pointer;
 }
 .info__bingo {
-  width: 70%;
+  width: 50%;
   height: 100%;
   padding: 30px 30px 30px 30px;
   display: flex;
-  justify-content: center;
+  justify-content: flex-end;
   align-items: center;
+  font-size: 16px;
 }
 .info__text {
   width: 50%;
   height: 100%;
   display: flex;
-  justify-content: center;
+  justify-content: flex-start;
   align-items: center;
+}
+.info__text__box {
+  width: 100%;
+  height: 500px;
 }
 .bingo__frame {
   position: relative;
-  width: 55%;
+  width: 500px;
   border: 1px solid black;
 }
 .bingo__frame:before {
@@ -233,34 +245,102 @@ export default {
   align-items: center;
   text-align: center;
 }
-@media screen and (max-width: 868px) {
+.info__text__box__title {
+  font-size: 28px;
+  font-family: "NanumSEB";
+  color: #000000;
+}
+.info__text__box__username {
+  font-size: 20px;
+  font-family: "NanumSEB";
+  color: #000000;
+}
+.info__text__box__time {
+  font-size: 20px;
+  font-family: "NanumSEB";
+  color: #000000;
+}
+.info__text__box__download {
+  width: 160px;
+  height: 50px;
+  border-radius: 30px;
+  border: 3px solid #6c63ff;
+  color: #6c63ff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: bold;
+  font-family: "NanumSEB";
+  font-size: 18px;
+  line-height: 1;
+  cursor: pointer;
+  margin-top: 5px;
+  transition: 0.2s;
+}
+.info__text__box__download:hover {
+  background-color: #6c63ff;
+  color: white;
+}
+@media screen and (max-width: 1200px) {
+  .bingo__frame {
+    width: 400px;
+  }
+  .info__text__box {
+    height: 400px;
+  }
+}
+@media screen and (max-width: 900px) {
+  .bingo__frame {
+    width: 330px;
+  }
+  .info__text__box {
+    height: 330px;
+  }
+}
+@media screen and (max-width: 768px) {
   .info__bingo {
     width: 100%;
-    height: 45%;
+    height: 50%;
+    justify-content: center;
+    align-items: flex-end;
   }
   .info__text {
     width: 100%;
     height: 55%;
+    justify-content: center;
   }
   .box {
     flex-direction: column;
   }
   .bingo__frame {
-    width: 50%;
+    width: 300px;
   }
   .info__bingo > * {
-    font-size: 16px;
+    font-size: 14px;
+  }
+  .info__text__box {
+    width: 100%;
+    height: 100%;
+    padding: 0px 30px;
   }
 }
-@media screen and (max-width: 486px) {
+@media screen and (max-width: 400px) {
   .bingo__frame {
     width: 100%;
   }
   .info__bingo {
-    margin-top: 30px;
+    align-items: flex-start;
+    justify-content: center;
+    height: fit-content;
+    padding-top: 60px;
+    padding-bottom: 15px;
   }
   .info__bingo > * {
     font-size: 12px;
+  }
+  .info__text__box {
+    width: 100%;
+    padding: 0px 28px;
   }
 }
 </style>
