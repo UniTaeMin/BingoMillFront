@@ -129,6 +129,7 @@ export default {
     Delete() {
       this.$store
         .dispatch("Delete", {
+          _id: this.Data._id,
           password: this.password
         })
         .then(res => {
@@ -143,7 +144,8 @@ export default {
           } else {
             this.error = res.data.result;
           }
-        });
+        })
+        .catch(e => {});
     },
     first() {
       this.$router.push("/");
