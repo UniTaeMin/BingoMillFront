@@ -13,7 +13,7 @@ export default new Vuex.Store({
     UpLoad({ commit, state }, data) {
       return new Promise((resolve, reject) => {
         axios
-          .post("http://localhost:4000/post/create", data)
+          .post("https://www.taemin.dev/bingo/post/create", data)
           .then(value => {
             resolve(value);
           })
@@ -25,7 +25,7 @@ export default new Vuex.Store({
     FindAll({ commit, state }, data) {
       return new Promise((resolve, reject) => {
         axios
-          .post("http://localhost:4000/post/findall")
+          .post("https://www.taemin.dev/bingo/post/findall")
           .then(value => {
             resolve(value);
           })
@@ -37,7 +37,7 @@ export default new Vuex.Store({
     FindOne({ commit, state }, data) {
       return new Promise((resolve, reject) => {
         axios
-          .post("http://localhost:4000/post/findone", data)
+          .post("https://www.taemin.dev/bingo/post/findone", data)
           .then(value => {
             resolve(value);
           })
@@ -49,7 +49,7 @@ export default new Vuex.Store({
     Delete({ commit, state }, data) {
       return new Promise((resolve, reject) => {
         axios
-          .delete("http://localhost:4000/post/delete", { data: data })
+          .delete("https://www.taemin.dev/bingo/post/delete", { data: data })
           .then(value => {
             resolve(value);
           })
