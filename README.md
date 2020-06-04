@@ -1,16 +1,16 @@
-# bingo
+# BingoMillFront
 
-## Project setup
+## 프로젝트 node_module 다운
 ```
 npm install
 ```
 
-### Compiles and hot-reloads for development
+### 개발 서버 온
 ```
 npm run serve
 ```
 
-### Compiles and minifies for production
+### 빌드
 ```
 npm run build
 ```
