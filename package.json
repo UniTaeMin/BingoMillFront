@@ -12,7 +12,7 @@
     "core-js": "^3.6.4",
     "firebase": "^7.14.0",
     "html2canvas": "^1.0.0-rc.5",
-    "jspdf": "^1.5.3",
+    "jspdf": "^2.3.1",
     "vue": "^2.6.11",
     "vue-html2canvas": "0.0.4",
     "vue-router": "^3.1.5",
